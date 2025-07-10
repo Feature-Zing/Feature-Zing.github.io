@@ -4,17 +4,17 @@
   
   
   <entry>
-    <title>测试文章</title>
-    <link href="/2025/06/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/"/>
-    <url>/2025/06/10/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <title>如何使用hexo发布一篇文章</title>
+    <link href="/2025/07/10/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+    <url>/2025/07/10/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
     
-    <content type="html"><![CDATA[<p>这是一篇测试文章，测试pp</p>]]></content>
+    <content type="html"><![CDATA[<p>使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题</p><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>新建文章指令，如下为：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo new [layout] &lt;title&gt;<br></code></pre></td></tr></table></figure><p>layout格式提供了三种默认布局分别是：<strong>post、page、draft</strong></p><table><thead><tr><th>布局</th><th>路径</th></tr></thead><tbody><tr><td>post</td><td>source/_posts</td></tr><tr><td>page</td><td>source</td></tr><tr><td>draft</td><td>source/__draft</td></tr></tbody></table><p>其中布局draft布局为草稿，草稿模式下默认不会显示再文章列表，如果需要发布则还需要执行：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo puhlish [layout] &lt;title&gt;<br></code></pre></td></tr></table></figure><h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>完成文章的编写后，需要执行相关发布命令，会自动部署到网站</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate --deploy<br>hexo deploy --generate<br></code></pre></td></tr></table></figure>]]></content>
     
     
     
     <tags>
       
-      <tag>Java</tag>
+      <tag>hexo</tag>
       
     </tags>
     
