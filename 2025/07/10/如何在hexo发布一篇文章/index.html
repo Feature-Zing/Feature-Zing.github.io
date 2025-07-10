@@ -21,12 +21,12 @@
   <meta name="author" content="六十">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题 新建文章新建文章指令，如下为： 1hexo new [layout] &lt;title&gt;  layout格式提供了三种默认布局分别是：post、page、draft    布局 路径    post source&#x2F;_posts   page s">
+    <meta name="description" content="使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题 新建文章新建文章指令，如下为： hexo new [layout] &lt;title&gt;  layout格式提供了三种默认布局分别是：post、page、draft    布局 路径    post source&#x2F;_posts   page so">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在hexo发布一篇文章">
 <meta property="og:url" content="https://feature-zing.github.io/2025/07/10/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/index.html">
 <meta property="og:site_name" content="六十">
-<meta property="og:description" content="使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题 新建文章新建文章指令，如下为： 1hexo new [layout] &lt;title&gt;  layout格式提供了三种默认布局分别是：post、page、draft    布局 路径    post source&#x2F;_posts   page s">
+<meta property="og:description" content="使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题 新建文章新建文章指令，如下为： hexo new [layout] &lt;title&gt;  layout格式提供了三种默认布局分别是：post、page、draft    布局 路径    post source&#x2F;_posts   page so">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-10T05:47:52.000Z">
 <meta property="article:modified_time" content="2025-07-10T05:48:32.000Z">
@@ -302,7 +302,7 @@
                 
                 <p>使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题</p>
 <h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>新建文章指令，如下为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo new [layout] &lt;title&gt;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs shell">hexo new [layout] &lt;title&gt;</code></pre></div>
 
 <p>layout格式提供了三种默认布局分别是：<strong>post、page、draft</strong></p>
 <table>
@@ -326,14 +326,15 @@
 </tr>
 </tbody></table>
 <p>其中布局draft布局为草稿，草稿模式下默认不会显示再文章列表，如果需要发布则还需要执行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo puhlish [layout] &lt;title&gt;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs shell">hexo puhlish [layout] &lt;title&gt;</code></pre></div>
 
 <h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>完成文章的编写后，需要执行相关发布命令，会自动部署到设置个Github Page</p>
 <ol>
 <li><p>清除缓存</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo clean<br></code></pre></td></tr></table></figure></li>
+ <div class="code-wrapper"><pre><code class="hljs shell">hexo clean</code></pre></div></li>
 <li><p>发布文章，可以使用以下命令</p>
- <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate --deploy<br>hexo deploy --generate<br></code></pre></td></tr></table></figure>
+ <div class="code-wrapper"><pre><code class="hljs shell">hexo generate --deploy
+hexo deploy --generate</code></pre></div>
 
 </li>
 </ol>
