@@ -29,8 +29,9 @@
 <meta property="og:description" content="使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题 新建文章新建文章指令，如下为： 1hexo new [layout] &lt;title&gt;  layout格式提供了三种默认布局分别是：post、page、draft    布局 路径    post source&#x2F;_posts   page s">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-10T03:47:15.000Z">
-<meta property="article:modified_time" content="2025-07-10T03:47:29.000Z">
+<meta property="article:modified_time" content="2025-07-10T03:54:02.368Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -237,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          175 字
+          193 字
         
       </span>
     
@@ -327,8 +328,16 @@
 <p>其中布局draft布局为草稿，草稿模式下默认不会显示再文章列表，如果需要发布则还需要执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo puhlish [layout] &lt;title&gt;<br></code></pre></td></tr></table></figure>
 
-<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>完成文章的编写后，需要执行相关发布命令，会自动部署到网站</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate --deploy<br>hexo deploy --generate<br></code></pre></td></tr></table></figure>
+<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>完成文章的编写后，需要执行相关发布命令，会自动部署到设置个Github Page</p>
+<ol>
+<li><p>清除缓存</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo clean<br></code></pre></td></tr></table></figure></li>
+<li><p>发布文章，可以使用以下命令</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">hexo generate --deploy<br>hexo deploy --generate<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
                 
               </div>
             
@@ -336,6 +345,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/hexo/" class="category-chain-item">hexo</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/hexo/" class="print-no-link">#hexo</a>
+      
+    </div>
   
 </div>
 
