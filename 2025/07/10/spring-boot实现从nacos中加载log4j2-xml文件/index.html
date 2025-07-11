@@ -29,7 +29,7 @@
 <meta property="og:description" content="在开发中一般把日志文件配置xml文件，放在项目的resource文件夹下，但是每个系统都有一个日志xml配置文件，如果需要修改日志格式等配置则需要重新发版，流程很长，所以提出需求需要通过nacos配置中心读取并且实现配置动态刷新的能力。通过改变加载顺序实现在项目启动时，通过nacos读取到配置的日志XML文件，然后将xml文件内容放入LoggerContext，实现日志文件加载。 引入log4j2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-10T06:23:41.000Z">
-<meta property="article:modified_time" content="2025-07-11T01:22:18.000Z">
+<meta property="article:modified_time" content="2025-07-11T01:30:48.000Z">
 <meta property="article:author" content="六十">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Nacos">
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.4k 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          11 分钟
+          12 分钟
         
       </span>
     
@@ -320,14 +320,38 @@
     <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre></div>
 
-<h2 id="获取Nacos-配置xml文件并加载"><a href="#获取Nacos-配置xml文件并加载" class="headerlink" title="获取Nacos 配置xml文件并加载"></a>获取Nacos 配置xml文件并加载</h2><p>通过nacos加载日志配置xml文件难点在于，需要在项目启动之前，将日志文件加载到日志上下文中，需要使用spring 提供的 <strong><code>ApplicationContextInitializer</code></strong> 接口来实现这个功能。ApplicationContextInitializer 的作用，它允许你在 Spring 容器加载 Bean 之前做一些初始化工作，例如：</p>
+<h2 id="获取配置xml文件并加载"><a href="#获取配置xml文件并加载" class="headerlink" title="获取配置xml文件并加载"></a>获取配置xml文件并加载</h2><h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><p>通过nacos加载日志配置xml文件难点在于，需要在项目启动之前，将日志文件加载到日志上下文中，需要使用spring 提供的 <strong><code>ApplicationContextInitializer</code></strong> 接口来实现这个功能。ApplicationContextInitializer 的作用，它允许你在 Spring 容器加载 Bean 之前做一些初始化工作，例如：</p>
 <ol>
 <li>设置环境变量</li>
 <li>加载外部配置（如从 Nacos、Zookeeper 等）</li>
 <li>初始化日志系统等基础设施</li>
 </ol>
 <p>加载实现逻辑如下：</p>
-<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoggerContextInitializer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ApplicationContextInitializer</span>&lt;ConfigurableApplicationContext&gt;, Ordered &#123;
+<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.alibaba.nacos.api.NacosFactory;
+<span class="hljs-keyword">import</span> com.alibaba.nacos.api.config.ConfigService;
+<span class="hljs-keyword">import</span> com.alibaba.nacos.api.exception.NacosException;
+<span class="hljs-keyword">import</span> org.apache.commons.lang3.StringUtils;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.LogManager;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.LoggerContext;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.ConfigurationFactory;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.ConfigurationSource;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.Configurator;
+<span class="hljs-keyword">import</span> org.slf4j.Logger;
+<span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;
+<span class="hljs-keyword">import</span> org.springframework.context.ApplicationContextInitializer;
+<span class="hljs-keyword">import</span> org.springframework.context.ConfigurableApplicationContext;
+<span class="hljs-keyword">import</span> org.springframework.core.Ordered;
+
+<span class="hljs-keyword">import</span> java.io.ByteArrayInputStream;
+<span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;
+<span class="hljs-keyword">import</span> java.util.Properties;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@author</span> Li Yuan</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2025/7/10 14:42</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@describe</span></span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoggerContextInitializer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ApplicationContextInitializer</span>&lt;ConfigurableApplicationContext&gt;, Ordered &#123;
 
     <span class="hljs-keyword">private</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(LoggerContextInitializer.class);
 
@@ -370,12 +394,14 @@
                 <span class="hljs-type">ConfigService</span> <span class="hljs-variable">configServer</span> <span class="hljs-operator">=</span> createConfigServer();
                 <span class="hljs-comment">// 日志的xml文件内容</span>
                 <span class="hljs-type">String</span> <span class="hljs-variable">xmlContext</span> <span class="hljs-operator">=</span> configServer.getConfig(dataId, groupId, Long.parseLong(timeOut));
-                configLogger(xmlContext);
+                <span class="hljs-keyword">if</span> (StringUtils.isNotBlank(xmlContext)) &#123;
+                    configLogger(xmlContext);
+                    logger.info(<span class="hljs-string">&quot;===============nacos加载日志xml内容成功=========&quot;</span>);
+                &#125;
             &#125;
         &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
-            logger.info(e.getMessage());
+            logger.error(<span class="hljs-string">&quot;加载日志信息异常，异常原因为：&#123;&#125;&quot;</span>, e);
         &#125;
-
     &#125;
 
     <span class="hljs-comment">/**</span>
@@ -432,17 +458,57 @@
     <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getOrder</span><span class="hljs-params">()</span> &#123;
         <span class="hljs-keyword">return</span> Ordered.HIGHEST_PRECEDENCE + <span class="hljs-number">15</span>;
     &#125;
-&#125;</code></pre></div>
+&#125;
+</code></pre></div>
 
 <p>其中核心在于**<code>loadLoggerContext()</code>** 和 <strong><code>configLogger(String loggerXml)</code></strong> 两个方法，通过创建nacos连接，读取指定配置的data-id、group-id文件，加载到系统然后放入 <strong>LoggerContext</strong> 中，实现日志文件大加载。以上部分实现了从nacos加载日志文件并且放入日志上下文中。在项目启动时就生效</p>
+<h3 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h3><ul>
+<li><p>方式一：使用spring.factories实现注入</p>
+  <div class="code-wrapper"><pre><code class="hljs text">org.springframework.context.ApplicationContextInitializer=\
+com.future.nacos.logger.LoggerContextInitializer</code></pre></div></li>
+<li><p>方式二：使用SpringApplicaton注入</p>
+  <div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DynamicNacosLoggerApplication</span> &#123;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;
+        <span class="hljs-type">SpringApplication</span> <span class="hljs-variable">springApplication</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SpringApplication</span>(DynamicNacosLoggerApplication.class);
+        springApplication.addInitializers(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LoggerContextInitializer</span>());
+        springApplication.run(args);
+    &#125;
+&#125;</code></pre></div>
+
+</li>
+</ul>
 <h2 id="动态刷新日志"><a href="#动态刷新日志" class="headerlink" title="动态刷新日志"></a>动态刷新日志</h2><p>动态刷新日志是通过创建一个nacos的监听器来对指定的配置进行监听，然后重新加载日志上下文内容，实现日志配置动态刷新功能。</p>
 <p>实现如下：</p>
-<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Component</span>
+<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">import</span> com.alibaba.cloud.nacos.NacosConfigManager;
+<span class="hljs-keyword">import</span> com.alibaba.nacos.api.config.listener.Listener;
+<span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;
+<span class="hljs-keyword">import</span> org.apache.commons.lang3.StringUtils;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.LogManager;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.LoggerContext;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.ConfigurationFactory;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.ConfigurationSource;
+<span class="hljs-keyword">import</span> org.apache.logging.log4j.core.config.Configurator;
+<span class="hljs-keyword">import</span> org.springframework.beans.BeansException;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.ObjectProvider;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Value;
+<span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;
+<span class="hljs-keyword">import</span> org.springframework.context.ApplicationContextAware;
+<span class="hljs-keyword">import</span> org.springframework.stereotype.Component;
+
+<span class="hljs-keyword">import</span> java.io.ByteArrayInputStream;
+<span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;
+<span class="hljs-keyword">import</span> java.util.concurrent.Executor;
+
+<span class="hljs-meta">@Component</span>
 <span class="hljs-meta">@Slf4j</span>
 <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoggerConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ApplicationContextAware</span> &#123;
 
     <span class="hljs-meta">@Autowired</span>
-    <span class="hljs-keyword">private</span> NacosConfigManager nacosConfigManager;
+    ObjectProvider&lt;NacosConfigManager&gt; nacosConfigManager;
 
     <span class="hljs-meta">@Value(&quot;$&#123;logger.config.data-id:&#125;&quot;)</span>
     <span class="hljs-keyword">private</span> String dataId;
@@ -450,67 +516,66 @@
     <span class="hljs-meta">@Value(&quot;$&#123;logger.config.group-id:&#125;&quot;)</span>
     <span class="hljs-keyword">private</span> String groupId;
 
-    <span class="hljs-keyword">private</span> ApplicationContext context;
+    <span class="hljs-keyword">private</span> ApplicationContext applicationContext;
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addLoggerConfigListener</span><span class="hljs-params">()</span> &#123;
-        log.info(<span class="hljs-string">&quot;尝试注册监听器: dataId=&#123;&#125;, groupId=&#123;&#125;&quot;</span>, dataId, groupId);
-
-        <span class="hljs-keyword">if</span> (StringUtils.isBlank(dataId) || StringUtils.isBlank(groupId)) &#123;
-            log.warn(<span class="hljs-string">&quot;dataId 或 groupId 为空，无法注册监听器&quot;</span>);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-
-        <span class="hljs-keyword">try</span> &#123;
-            nacosConfigManager.getConfigService().addListener(dataId, groupId, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Listener</span>() &#123;
-                <span class="hljs-meta">@Override</span>
-                <span class="hljs-keyword">public</span> Executor <span class="hljs-title function_">getExecutor</span><span class="hljs-params">()</span> &#123;
-                    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
-                &#125;
-
-                <span class="hljs-meta">@Override</span>
-                <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">receiveConfigInfo</span><span class="hljs-params">(String configInfo)</span> &#123;
-                    log.info(<span class="hljs-string">&quot;接收到新的日志配置内容...&quot;</span>);
-                    <span class="hljs-keyword">try</span> &#123;
-                        loadOnChange(configInfo);
-                    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
-                        log.error(<span class="hljs-string">&quot;日志配置更新失败&quot;</span>, e);
-                    &#125;
-                &#125;
-            &#125;);
-        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
-            log.error(<span class="hljs-string">&quot;注册日志配置监听失败&quot;</span>, e);
-        &#125;
-    &#125;
-
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">loadOnChange</span><span class="hljs-params">(String loggerXml)</span> <span class="hljs-keyword">throws</span> IOException &#123;
-        <span class="hljs-keyword">if</span> (StringUtils.isBlank(loggerXml)) &#123;
-            log.warn(<span class="hljs-string">&quot;日志配置内容为空，跳过更新&quot;</span>);
-            <span class="hljs-keyword">return</span>;
-        &#125;
-
-        log.info(<span class="hljs-string">&quot;正在应用新的日志配置...&quot;</span>);
-        configLogger(loggerXml);
-    &#125;
-
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configLogger</span><span class="hljs-params">(String loggerXml)</span> <span class="hljs-keyword">throws</span> IOException &#123;
-        <span class="hljs-type">LoggerContext</span> <span class="hljs-variable">loggerContext</span> <span class="hljs-operator">=</span> getLoggerContext();
-        loggerContext.stop();
-
-        <span class="hljs-type">ConfigurationSource</span> <span class="hljs-variable">configuration</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConfigurationSource</span>(
-                <span class="hljs-keyword">new</span> <span class="hljs-title class_">ByteArrayInputStream</span>(loggerXml.getBytes(StandardCharsets.UTF_8)));
-
-        Configurator.initialize(<span class="hljs-literal">null</span>, configuration);
-        loggerContext.start(ConfigurationFactory.getInstance().getConfiguration(loggerContext, configuration));
-    &#125;
 
     <span class="hljs-keyword">public</span> LoggerContext <span class="hljs-title function_">getLoggerContext</span><span class="hljs-params">()</span> &#123;
         <span class="hljs-keyword">return</span> (LoggerContext) LogManager.getContext(<span class="hljs-literal">false</span>);
     &#125;
 
 
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addLoggerConfigListener</span><span class="hljs-params">()</span> &#123;
+        <span class="hljs-type">NacosConfigManager</span> <span class="hljs-variable">configManager</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.nacosConfigManager.getIfAvailable();
+        <span class="hljs-keyword">if</span> (configManager != <span class="hljs-literal">null</span> &amp;&amp; StringUtils.isNotBlank(dataId) &amp;&amp; StringUtils.isNotBlank(groupId)) &#123;
+            <span class="hljs-keyword">try</span> &#123;
+
+                configManager.getConfigService().addListener(dataId, groupId, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Listener</span>() &#123;
+                    <span class="hljs-meta">@Override</span>
+                    <span class="hljs-keyword">public</span> Executor <span class="hljs-title function_">getExecutor</span><span class="hljs-params">()</span> &#123;
+                        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
+                    &#125;
+
+                    <span class="hljs-meta">@Override</span>
+                    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">receiveConfigInfo</span><span class="hljs-params">(String configInfo)</span> &#123;
+                        <span class="hljs-keyword">try</span> &#123;
+                            loadOnChange(configInfo);
+                        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+                            log.error(<span class="hljs-string">&quot;日志配置异常&quot;</span>);
+                        &#125;
+                    &#125;
+                &#125;);
+            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+                log.error(<span class="hljs-string">&quot;logger config 注册失败&quot;</span>);
+            &#125;
+
+        &#125;
+
+    &#125;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">loadOnChange</span><span class="hljs-params">(String loggerXml)</span> <span class="hljs-keyword">throws</span> IOException &#123;
+        <span class="hljs-keyword">if</span> (StringUtils.isBlank(loggerXml)) &#123;
+            log.info(<span class="hljs-string">&quot;不存在日志文件&quot;</span>);
+            <span class="hljs-keyword">return</span>;
+        &#125;
+        configLogger(loggerXml);
+        log.info(<span class="hljs-string">&quot;更新日志配置成功&quot;</span>);
+    &#125;
+
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> loggerXml</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configLogger</span><span class="hljs-params">(String loggerXml)</span> <span class="hljs-keyword">throws</span> IOException &#123;
+        <span class="hljs-type">ConfigurationSource</span> <span class="hljs-variable">configuration</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConfigurationSource</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ByteArrayInputStream</span>(loggerXml.getBytes(StandardCharsets.UTF_8)));
+        Configurator.initialize(<span class="hljs-literal">null</span>, configuration);
+        <span class="hljs-type">LoggerContext</span> <span class="hljs-variable">loggerContext</span> <span class="hljs-operator">=</span> getLoggerContext();
+        loggerContext.start(ConfigurationFactory.getInstance().getConfiguration(loggerContext, configuration));
+    &#125;
+
+
     <span class="hljs-meta">@Override</span>
     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setApplicationContext</span><span class="hljs-params">(ApplicationContext applicationContext)</span> <span class="hljs-keyword">throws</span> BeansException &#123;
-        <span class="hljs-built_in">this</span>.context = context;
+        <span class="hljs-built_in">this</span>.applicationContext = applicationContext;
         addLoggerConfigListener();
     &#125;
 &#125;
