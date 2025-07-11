@@ -35,9 +35,9 @@
   
   
   <entry>
-    <title>如何在hexo发布一篇文章</title>
-    <link href="/2025/07/10/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-    <url>/2025/07/10/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+    <title>Hexo 博客入门指南：发布一篇文章的完整步骤</title>
+    <link href="/2025/07/10/Hexo-%E5%8D%9A%E5%AE%A2%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4/"/>
+    <url>/2025/07/10/Hexo-%E5%8D%9A%E5%AE%A2%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E5%8F%91%E5%B8%83%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84%E5%AE%8C%E6%95%B4%E6%AD%A5%E9%AA%A4/</url>
     
     <content type="html"><![CDATA[<p>使用hexo搭建好博客后，如何使用也是很重要，本文主要简单介绍如何使用hexo 命令来创建一篇文章，以及发布文章流程，本文使用主题为fluid主题</p><h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>新建文章指令，如下为：</p><div class="code-wrapper"><pre><code class="hljs shell">hexo new [layout] &lt;title&gt;</code></pre></div><p>layout格式提供了三种默认布局分别是：<strong>post、page、draft</strong></p><table><thead><tr><th>布局</th><th>路径</th></tr></thead><tbody><tr><td>post</td><td>source/_posts</td></tr><tr><td>page</td><td>source</td></tr><tr><td>draft</td><td>source/__draft</td></tr></tbody></table><p>其中布局draft布局为草稿，草稿模式下默认不会显示再文章列表，如果需要发布则还需要执行：</p><div class="code-wrapper"><pre><code class="hljs shell">hexo puhlish [layout] &lt;title&gt;</code></pre></div><h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><p>完成文章的编写后，需要执行相关发布命令，会自动部署到设置个Github Page</p><ol><li><p>清除缓存</p> <div class="code-wrapper"><pre><code class="hljs shell">hexo clean</code></pre></div></li><li><p>发布文章，可以使用以下命令</p> <div class="code-wrapper"><pre><code class="hljs shell">hexo generate --deployhexo deploy --generate</code></pre></div></li></ol>]]></content>
     
