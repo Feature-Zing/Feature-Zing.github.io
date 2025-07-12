@@ -47,6 +47,13 @@
 
   
   <url>
+    <loc>https://feature-zing.github.io/tags/hexo/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://feature-zing.github.io/tags/Java/</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -68,13 +75,6 @@
   </url>
   
   <url>
-    <loc>https://feature-zing.github.io/tags/hexo/</loc>
-    <lastmod>2025-07-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://feature-zing.github.io/tags/Mybatis-Plus/</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -84,14 +84,14 @@
 
   
   <url>
-    <loc>https://feature-zing.github.io/categories/Java/</loc>
+    <loc>https://feature-zing.github.io/categories/hexo/</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://feature-zing.github.io/categories/hexo/</loc>
+    <loc>https://feature-zing.github.io/categories/Java/</loc>
     <lastmod>2025-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
