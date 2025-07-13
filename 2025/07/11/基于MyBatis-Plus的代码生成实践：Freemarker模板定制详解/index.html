@@ -29,7 +29,7 @@
 <meta property="og:description" content="开发中我们使用mybatis-plus框架作为持久层框架，mybatis-plus是在mybatis的基础上进行增强，简化了开发，提高了开发效率，其中我们就使用mybatis-plus提供的代码生成器来生成我们的mapper、entity、service、serviceImpl、controller 方便我们快速搭建一个项目基本框架，提升开发效率。 Mybatis-plus的提供的代码生成器，支持">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-11T03:51:17.000Z">
-<meta property="article:modified_time" content="2025-07-12T08:47:43.000Z">
+<meta property="article:modified_time" content="2025-07-13T06:33:07.000Z">
 <meta property="article:author" content="六十">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Mybatis-Plus">
@@ -239,7 +239,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.7k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
         
-          12 分钟
+          15 分钟
         
       </span>
     
@@ -314,7 +314,8 @@
 <p>模板自动使用场景有：</p>
 <ol>
 <li>拓展模板，如生成VO，DTO类模板</li>
-<li></li>
+<li>修改模板，如entity，mapper相关模板修改。</li>
+<li>数据库表或者字段名称映射，对表名或者字段名进行加密操作，比如使用t001，f001…fn，不使用字段英文单词进行加解密</li>
 </ol>
 <h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><div class="code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.baomidou<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
@@ -421,24 +422,7 @@ public class $&#123;entity&#125;VO &#123;
 &lt;/#if&gt;
 &#125;</code></pre></div>
 
-<h3 id="generator-生成器配置"><a href="#generator-生成器配置" class="headerlink" title="generator 生成器配置"></a>generator 生成器配置</h3><div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">import</span> cn.hutool.core.date.DatePattern;
-<span class="hljs-keyword">import</span> cn.hutool.core.date.LocalDateTimeUtil;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.annotation.FieldFill;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.annotation.IdType;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.FastAutoGenerator;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.config.OutputFile;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.config.builder.CustomFile;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-<span class="hljs-keyword">import</span> com.baomidou.mybatisplus.generator.fill.Column;
-<span class="hljs-keyword">import</span> com.future.mybatisplus.engine.Author;
-<span class="hljs-keyword">import</span> com.future.mybatisplus.engine.NameConvert;
-
-<span class="hljs-keyword">import</span> java.time.LocalDateTime;
-<span class="hljs-keyword">import</span> java.util.Collections;
-<span class="hljs-keyword">import</span> java.util.HashMap;
-<span class="hljs-keyword">import</span> java.util.Map;
-
-<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Generator</span> &#123;
+<h3 id="generator-生成器配置"><a href="#generator-生成器配置" class="headerlink" title="generator 生成器配置"></a>generator 生成器配置</h3><div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Generator</span> &#123;
 
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;jdbc:mysql://192.168.0.105:3306/code_generator?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&quot;</span>;
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;root&quot;</span>;
@@ -555,6 +539,31 @@ builder.customMap(objectMap)
                )</code></pre></div>
 
 <p>点击生成后就可以生成VO类对象，提供编码使用，同时支持lombok注解及swagger注解，通过generator的策略进行设置。</p>
+<h3 id="变量注入"><a href="#变量注入" class="headerlink" title="变量注入"></a>变量注入</h3><p>自定义代码模板后，如果在模板中引入自定义变量并且使用，我们需要代码生成器流程注入我们自定义的变量值。方式有两种，一种是通过<strong>injectionConfig</strong> 设置<strong>ObjectMap</strong>、一种是通过自定义重写模板重写<strong>getObjectMap</strong>方法。两种方式都是通过ObjectMap设置属性值进入。</p>
+<h4 id="方式一：通过injectionConfig"><a href="#方式一：通过injectionConfig" class="headerlink" title="方式一：通过injectionConfig"></a>方式一：通过injectionConfig</h4><div class="code-wrapper"><pre><code class="hljs java">Map&lt;String, Object&gt; objectMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();
+objectMap.put(<span class="hljs-string">&quot;customor&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Author</span>(<span class="hljs-string">&quot;6&quot;</span>));</code></pre></div>
+
+<p>需要在生成设置代码生成器的时候，通过injectionConfig进行设置即可，可以是对象，基本数据类型等，前面通过自定义VO模板生成注入对象使用的就是上面这种方式。</p>
+<h4 id="方式二：重写对应模板的getObjectMap方法"><a href="#方式二：重写对应模板的getObjectMap方法" class="headerlink" title="方式二：重写对应模板的getObjectMap方法"></a>方式二：重写对应模板的getObjectMap方法</h4><p>本文使用的是<strong>FreemarkerTemplateEngine</strong>模板引擎，需要自定义一个类继承当前模板引擎，然后重写对应方法即可。</p>
+<div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerFreemarkerTemplateEngine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">FreemarkerTemplateEngine</span> &#123;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 设置自定义变量，注入模板中使用</span>
+<span class="hljs-comment">     *</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> config    配置信息</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> tableInfo 表信息对象</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-meta">@NotNull</span> Map&lt;String, Object&gt; <span class="hljs-title function_">getObjectMap</span><span class="hljs-params">(<span class="hljs-meta">@NotNull</span> ConfigBuilder config, <span class="hljs-meta">@NotNull</span> TableInfo tableInfo)</span> &#123;
+        Map&lt;String, Object&gt; objectMap = <span class="hljs-built_in">super</span>.getObjectMap(config, tableInfo);
+        objectMap.put(<span class="hljs-string">&quot;customor&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Author</span>(<span class="hljs-string">&quot;5&quot;</span>));
+        <span class="hljs-keyword">return</span> objectMap;
+
+    &#125;
+&#125;</code></pre></div>
+
 
                 
               </div>
