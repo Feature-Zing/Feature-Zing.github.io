@@ -21,16 +21,16 @@
   <meta name="author" content="六十">
   <meta name="keywords" content="">
   
-    <meta name="description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建的最新版kafka集群本次搭建kafka集群使用的是d">
+    <meta name="description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建kafka集群使用KRaft作为注册中心本次搭建使用最">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Docker Compose的Kafka分布式集群部署">
 <meta property="og:url" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="六十">
-<meta property="og:description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建的最新版kafka集群本次搭建kafka集群使用的是d">
+<meta property="og:description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建kafka集群使用KRaft作为注册中心本次搭建使用最">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.assets/image-20250714141802730.png">
 <meta property="article:published_time" content="2025-07-14T05:47:45.000Z">
-<meta property="article:modified_time" content="2025-07-14T06:21:08.000Z">
+<meta property="article:modified_time" content="2025-07-14T07:14:08.000Z">
 <meta property="article:author" content="六十">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary_large_image">
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          663 字
+          995 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          6 分钟
+          9 分钟
         
       </span>
     
@@ -311,7 +311,7 @@
 <li>事件溯源</li>
 <li>消息队列服务</li>
 </ul>
-<h2 id="搭建的最新版kafka集群"><a href="#搭建的最新版kafka集群" class="headerlink" title="搭建的最新版kafka集群"></a>搭建的最新版kafka集群</h2><p>本次搭建kafka集群使用的是docker-compose来进行搭建所需要的环境。docker-compose文件如下所示：</p>
+<h2 id="搭建kafka集群"><a href="#搭建kafka集群" class="headerlink" title="搭建kafka集群"></a>搭建kafka集群</h2><h3 id="使用KRaft作为注册中心"><a href="#使用KRaft作为注册中心" class="headerlink" title="使用KRaft作为注册中心"></a>使用KRaft作为注册中心</h3><p>本次搭建使用最新版本的kafka版本进行搭建，最新版已经去除了zookeeper作为注册中心，使用KRaft作为注册中心和节点管理。docker-compose文件如下所示：</p>
 <div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span>
 <span class="hljs-attr">services:</span>
   <span class="hljs-attr">kafka1:</span>
@@ -406,6 +406,94 @@
 <p>启动效果为：</p>
 <p><img src="./%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.assets/image-20250714141802730.png" srcset="/img/loading.gif" lazyload alt="image-20250714141802730"></p>
 <p>使用 <strong><code>docker-compose ps</code></strong> kafka集群即为启动成功。通过宿主机ip:port即可访问到对应的kafka集群。</p>
+<h3 id="使用zookeeper注册中心"><a href="#使用zookeeper注册中心" class="headerlink" title="使用zookeeper注册中心"></a>使用zookeeper注册中心</h3><p>kafka3.2版本之前支持使用zookeeper最为注册中心，在3.2版本之后去除了zookeeper作为注册中心，因为在节点使用zookeeper时存在以下问题：</p>
+<ul>
+<li>需要维护两套系统zookeeper+kafka，运维难度高</li>
+<li>架构复杂</li>
+<li>一致性和拓展能力弱</li>
+<li>启动速度更慢</li>
+</ul>
+<h4 id="启动zookeeper"><a href="#启动zookeeper" class="headerlink" title="启动zookeeper"></a>启动zookeeper</h4><p>使用zookeeper作为注册中心时，需要依赖zookeeper作为注册中心并且优先启动，使用docker-compose启动如下所示：</p>
+<div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&quot;3&quot;</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">zookeeper:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">zookeeper</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">zookeeper:3.6.3</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./data:/data</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./conf:/conf</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-comment"># 设置环境变量 时区上海 编码UTF-8</span>
+      <span class="hljs-attr">TZ:</span> <span class="hljs-string">Asia/Shanghai</span>
+      <span class="hljs-attr">LANG:</span> <span class="hljs-string">en_US.UTF-8</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;2181:2181&quot;</span></code></pre></div>
+
+<h4 id="启动kafka集群"><a href="#启动kafka集群" class="headerlink" title="启动kafka集群"></a>启动kafka集群</h4><p>docker-compose启动文件如下所示：</p>
+<div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span>
+
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">kafka1:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">bitnami/kafka:3.2.3</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka1</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9092:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">KAFKA_BROKER_ID:</span> <span class="hljs-number">1</span>
+      <span class="hljs-attr">ALLOW_PLAINTEXT_LISTENER:</span> <span class="hljs-number">1</span>
+      <span class="hljs-attr">KAFKA_ZOOKEEPER_CONNECT:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.105</span><span class="hljs-string">:2181</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9092</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">KAFKA_NUM_PARTITIONS:</span> <span class="hljs-number">3</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">kafka-net</span>
+
+  <span class="hljs-attr">kafka2:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">bitnami/kafka:3.2.3</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka2</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9094:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">KAFKA_BROKER_ID:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">ALLOW_PLAINTEXT_LISTENER:</span> <span class="hljs-number">1</span>
+      <span class="hljs-attr">KAFKA_ZOOKEEPER_CONNECT:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.105</span><span class="hljs-string">:2181</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9094</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">KAFKA_NUM_PARTITIONS:</span> <span class="hljs-number">3</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">kafka-net</span>
+
+  <span class="hljs-attr">kafka3:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">bitnami/kafka:3.2.3</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka3</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9096:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">KAFKA_BROKER_ID:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">ALLOW_PLAINTEXT_LISTENER:</span> <span class="hljs-number">1</span>
+      <span class="hljs-attr">KAFKA_ZOOKEEPER_CONNECT:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.105</span><span class="hljs-string">:2181</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9096</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">kafka-net</span>
+
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">kafka-net:</span>
+    <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span></code></pre></div>
+
+
+
 
                 
               </div>
