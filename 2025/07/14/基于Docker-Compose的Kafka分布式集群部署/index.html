@@ -21,22 +21,24 @@
   <meta name="author" content="六十">
   <meta name="keywords" content="">
   
-    <meta name="description" content="迪杰斯特算法实现思路public PathResult dijkstra(int start, int end) &amp;#123;     &#x2F;&#x2F; 初始化记录起点到各顶点的距离     double[] dist &#x3D; new double[count];     &#x2F;&#x2F; 记录最短路径的前驱节点     int[] path &#x3D; new int[count];     &#x2F;&#x2F; 标记节点是否已处理     bo">
+    <meta name="description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建的最新版kafka集群本次搭建kafka集群使用的是d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="迪杰斯特算法">
-<meta property="og:url" content="https://feature-zing.github.io/2025/07/13/%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="基于Docker Compose的Kafka分布式集群部署">
+<meta property="og:url" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="六十">
-<meta property="og:description" content="迪杰斯特算法实现思路public PathResult dijkstra(int start, int end) &amp;#123;     &#x2F;&#x2F; 初始化记录起点到各顶点的距离     double[] dist &#x3D; new double[count];     &#x2F;&#x2F; 记录最短路径的前驱节点     int[] path &#x3D; new int[count];     &#x2F;&#x2F; 标记节点是否已处理     bo">
+<meta property="og:description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。应用场景： 日志收集与聚合 事件溯源 消息队列服务  搭建的最新版kafka集群本次搭建kafka集群使用的是d">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-13T06:53:49.000Z">
-<meta property="article:modified_time" content="2025-07-14T00:56:47.563Z">
+<meta property="og:image" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.assets/image-20250714141802730.png">
+<meta property="article:published_time" content="2025-07-14T05:47:45.000Z">
+<meta property="article:modified_time" content="2025-07-14T06:21:08.000Z">
 <meta property="article:author" content="六十">
-<meta property="article:tag" content="算法">
+<meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.assets/image-20250714141802730.png">
   
   
   
-  <title>迪杰斯特算法 - 六十</title>
+  <title>基于Docker Compose的Kafka分布式集群部署 - 六十</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -215,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">迪杰斯特算法</span>
+            <span id="subtitle">基于Docker Compose的Kafka分布式集群部署</span>
           
         </div>
 
@@ -226,8 +228,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-13 14:53" pubdate>
-          2025年7月13日 下午
+        <time datetime="2025-07-14 13:47" pubdate>
+          2025年7月14日 下午
         </time>
       </span>
     
@@ -238,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          281 字
+          663 字
         
       </span>
     
@@ -249,7 +251,7 @@
         
         
         
-          3 分钟
+          6 分钟
         
       </span>
     
@@ -295,68 +297,115 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">迪杰斯特算法</h1>
+            <h1 id="seo-header">基于Docker Compose的Kafka分布式集群部署</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="迪杰斯特算法实现思路"><a href="#迪杰斯特算法实现思路" class="headerlink" title="迪杰斯特算法实现思路"></a>迪杰斯特算法实现思路</h2><div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> PathResult <span class="hljs-title function_">dijkstra</span><span class="hljs-params">(<span class="hljs-type">int</span> start, <span class="hljs-type">int</span> end)</span> &#123;
-    <span class="hljs-comment">// 初始化记录起点到各顶点的距离</span>
-    <span class="hljs-type">double</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-title class_">double</span>[count];
-    <span class="hljs-comment">// 记录最短路径的前驱节点</span>
-    <span class="hljs-type">int</span>[] path = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[count];
-    <span class="hljs-comment">// 标记节点是否已处理</span>
-    <span class="hljs-type">boolean</span>[] visited = <span class="hljs-keyword">new</span> <span class="hljs-title class_">boolean</span>[count];
+                <h2 id="什么是Kafka"><a href="#什么是Kafka" class="headerlink" title="什么是Kafka"></a>什么是Kafka</h2><p>kafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。<br>主要功能包括：</p>
+<ul>
+<li>发布和订阅数据流：类似消息队列，支持多生产者和多消费者。</li>
+<li>存储数据流：数据可以被持久化</li>
+<li>实时处理数据流：支持对数据进行转换，聚合等实时处理操作。<br>应用场景：</li>
+<li>日志收集与聚合</li>
+<li>事件溯源</li>
+<li>消息队列服务</li>
+</ul>
+<h2 id="搭建的最新版kafka集群"><a href="#搭建的最新版kafka集群" class="headerlink" title="搭建的最新版kafka集群"></a>搭建的最新版kafka集群</h2><p>本次搭建kafka集群使用的是docker-compose来进行搭建所需要的环境。docker-compose文件如下所示：</p>
+<div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">kafka1:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">apache/kafka:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka1</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9092:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-comment"># Kafka 节点唯一标识符，每个节点必须不同</span>
+      <span class="hljs-attr">KAFKA_NODE_ID:</span> <span class="hljs-number">1</span>
+      <span class="hljs-comment"># 当前节点的角色：broker 和 controller</span>
+      <span class="hljs-attr">KAFKA_PROCESS_ROLES:</span> <span class="hljs-string">broker,controller</span>
+      <span class="hljs-comment"># 监听器配置：PLAINTEXT 表示明文通信，CONTROLLER 用于 controller 间通信</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093</span>
+      <span class="hljs-comment"># 外部可访问的监听地址（外部连接使用），IP 替换为宿主机实际 IP</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9092</span>
+      <span class="hljs-comment"># 指定 controller 使用的监听名称</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_LISTENER_NAMES:</span> <span class="hljs-string">CONTROLLER</span>
+      <span class="hljs-comment"># 协议映射：将监听器名称映射到协议类型</span>
+      <span class="hljs-attr">KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:</span> <span class="hljs-string">CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT</span>
+      <span class="hljs-comment"># Controller Quorum 配置，指定参与投票的 controller 节点及端口</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_QUORUM_VOTERS:</span> <span class="hljs-number">1</span><span class="hljs-string">@kafka1:9093,2@kafka2:9093,3@kafka3:9093</span>
+      <span class="hljs-comment"># 日志目录位置</span>
+      <span class="hljs-attr">KAFKA_LOG_DIRS:</span> <span class="hljs-string">/kafka-logs</span>
+      <span class="hljs-comment"># 偏移量主题副本因子，建议与集群节点数一致以提高容错能力</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-comment"># 事务状态日志副本因子</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-comment"># 事务状态日志最小 ISR（In-Sync Replicas）数量</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+      <span class="hljs-comment"># 默认分区数量，适用于新建的主题</span>
+      <span class="hljs-attr">KAFKA_NUM_PARTITIONS:</span> <span class="hljs-number">3</span>
 
-    <span class="hljs-comment">// 初始化邻接矩阵和距离数组</span>
-    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; count; i++) &#123;
-        dist[i] = adjMatrix[start][i];
-        path[i] = dist[i] == Double.MAX_VALUE ? -<span class="hljs-number">1</span> : start;
-    &#125;
+  <span class="hljs-attr">kafka2:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">apache/kafka:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka2</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9094:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">KAFKA_NODE_ID:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">KAFKA_PROCESS_ROLES:</span> <span class="hljs-string">broker,controller</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093</span>
+      <span class="hljs-comment">#ip为宿主机所在ip</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9094</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_LISTENER_NAMES:</span> <span class="hljs-string">CONTROLLER</span>
+      <span class="hljs-attr">KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:</span> <span class="hljs-string">CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_QUORUM_VOTERS:</span> <span class="hljs-number">1</span><span class="hljs-string">@kafka1:9093,2@kafka2:9093,3@kafka3:9093</span>
+      <span class="hljs-attr">KAFKA_LOG_DIRS:</span> <span class="hljs-string">/kafka-logs</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">KAFKA_NUM_PARTITIONS:</span> <span class="hljs-number">3</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./kafka2-data:/kafka-logs</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">kafka-net</span>
 
-    <span class="hljs-comment">// 标记起点为已访问</span>
-    visited[start] = <span class="hljs-literal">true</span>;
-    dist[start] = <span class="hljs-number">0</span>;
+  <span class="hljs-attr">kafka3:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">apache/kafka:latest</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka3</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9096:9092&quot;</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">KAFKA_NODE_ID:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_PROCESS_ROLES:</span> <span class="hljs-string">broker,controller</span>
+      <span class="hljs-attr">KAFKA_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093</span>
+      <span class="hljs-comment">#ip为宿主机所在ip</span>
+      <span class="hljs-attr">KAFKA_ADVERTISED_LISTENERS:</span> <span class="hljs-string">PLAINTEXT://192.168.0.105:9096</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_LISTENER_NAMES:</span> <span class="hljs-string">CONTROLLER</span>
+      <span class="hljs-attr">KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:</span> <span class="hljs-string">CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT</span>
+      <span class="hljs-attr">KAFKA_CONTROLLER_QUORUM_VOTERS:</span> <span class="hljs-number">1</span><span class="hljs-string">@kafka1:9093,2@kafka2:9093,3@kafka3:9093</span>
+      <span class="hljs-attr">KAFKA_LOG_DIRS:</span> <span class="hljs-string">/kafka-logs</span>
+      <span class="hljs-attr">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:</span> <span class="hljs-number">3</span>
+      <span class="hljs-attr">KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:</span> <span class="hljs-number">2</span>
+      <span class="hljs-attr">KAFKA_NUM_PARTITIONS:</span> <span class="hljs-number">3</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./kafka3-data:/kafka-logs</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">kafka-net</span>
 
-    <span class="hljs-comment">// 主循环：寻找最短路径</span>
-    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; count; i++) &#123;
-        <span class="hljs-comment">// 找到当前未访问的最近节点</span>
-        <span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> start;
-        <span class="hljs-type">double</span> <span class="hljs-variable">min</span> <span class="hljs-operator">=</span> Double.MAX_VALUE;
-        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; count; j++) &#123;
-            <span class="hljs-keyword">if</span> (!visited[j] &amp;&amp; dist[j] &lt; min) &#123;
-                index = j;
-                min = dist[j];
-            &#125;
-        &#125;
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">kafka-net:</span>
+    <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span></code></pre></div>
 
-        <span class="hljs-comment">// 标记该节点为已访问</span>
-        visited[index] = <span class="hljs-literal">true</span>;
+<blockquote>
+<p>环境配置参数说明参考：<a target="_blank" rel="noopener" href="https://hub.docker.com/r/bitnami/kafka#environment-variables">https://hub.docker.com/r/bitnami/kafka#environment-variables</a></p>
+</blockquote>
+<p>创建docker-compose.yaml文件并且将以上内容复制，将<strong>KAFKA_ADVERTISED_LISTENERS</strong> 环境变量的ip替换为自己所在宿主机的ip，替换完成后使用以下命令进行启动kafka集群</p>
+<div class="code-wrapper"><pre><code class="hljs shell">docker-compose up -d</code></pre></div>
 
-        <span class="hljs-comment">// 更新与当前节点相邻节点的最短距离</span>
-        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; k &lt; count; k++) &#123;
-            <span class="hljs-type">double</span> <span class="hljs-variable">temp</span> <span class="hljs-operator">=</span> adjMatrix[index][k] == Double.MAX_VALUE ? Double.MAX_VALUE : min;
-            <span class="hljs-keyword">if</span> (!visited[k] &amp;&amp; dist[k] &gt;= temp) &#123;
-                dist[k] = temp;
-                path[k] = index;
-            &#125;
-        &#125;
-
-        <span class="hljs-comment">// 如果已处理终点，提前结束</span>
-        <span class="hljs-keyword">if</span> (index == end) &#123;
-            <span class="hljs-keyword">break</span>;
-        &#125;
-    &#125;
-
-    <span class="hljs-comment">// 构建实际路径</span>
-    List&lt;VertexModel&gt; result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();
-    realPath(start, end, path, result);
-    result.add(vertex.get(end));
-
-    <span class="hljs-comment">// 返回结果</span>
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PathResult</span>(dist[end], result);
-&#125;</code></pre></div>
-
+<p>启动效果为：</p>
+<p><img src="./%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2.assets/image-20250714141802730.png" srcset="/img/loading.gif" lazyload alt="image-20250714141802730"></p>
+<p>使用 <strong><code>docker-compose ps</code></strong> kafka集群即为启动成功。通过宿主机ip:port即可访问到对应的kafka集群。</p>
 
                 
               </div>
@@ -375,7 +424,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  <a href="/categories/kafka/" class="category-chain-item">kafka</a>
   
   
 
@@ -390,7 +439,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+        <a href="/tags/kafka/" class="print-no-link">#kafka</a>
       
     </div>
   
@@ -402,8 +451,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>迪杰斯特算法</div>
-      <div>https://feature-zing.github.io/2025/07/13/迪杰斯特算法/</div>
+      <div>基于Docker Compose的Kafka分布式集群部署</div>
+      <div>https://feature-zing.github.io/2025/07/14/基于Docker-Compose的Kafka分布式集群部署/</div>
     </div>
     <div class="license-meta">
       
@@ -415,7 +464,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月13日</div>
+          <div>2025年7月14日</div>
         </div>
       
       
@@ -447,18 +496,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/" title="基于Docker Compose的Kafka分布式集群部署">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">基于Docker Compose的Kafka分布式集群部署</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/11/%E5%9F%BA%E4%BA%8EMyBatis-Plus%E7%9A%84%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%AE%9E%E8%B7%B5%EF%BC%9AFreemarker%E6%A8%A1%E6%9D%BF%E5%AE%9A%E5%88%B6%E8%AF%A6%E8%A7%A3/" title="基于 MyBatis-Plus 的代码生成实践：Freemarker 模板定制详解">
-                        <span class="hidden-mobile">基于 MyBatis-Plus 的代码生成实践：Freemarker 模板定制详解</span>
+                      <a href="/2025/07/13/%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E7%AE%97%E6%B3%95/" title="迪杰斯特算法">
+                        <span class="hidden-mobile">迪杰斯特算法</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
