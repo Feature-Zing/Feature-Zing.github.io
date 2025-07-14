@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>迪杰斯特算法</title>
+    <link href="/2025/07/13/%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E7%AE%97%E6%B3%95/"/>
+    <url>/2025/07/13/%E8%BF%AA%E6%9D%B0%E6%96%AF%E7%89%B9%E7%AE%97%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h2 id="迪杰斯特算法实现思路"><a href="#迪杰斯特算法实现思路" class="headerlink" title="迪杰斯特算法实现思路"></a>迪杰斯特算法实现思路</h2><div class="code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> PathResult <span class="hljs-title function_">dijkstra</span><span class="hljs-params">(<span class="hljs-type">int</span> start, <span class="hljs-type">int</span> end)</span> &#123;    <span class="hljs-comment">// 初始化记录起点到各顶点的距离</span>    <span class="hljs-type">double</span>[] dist = <span class="hljs-keyword">new</span> <span class="hljs-title class_">double</span>[count];    <span class="hljs-comment">// 记录最短路径的前驱节点</span>    <span class="hljs-type">int</span>[] path = <span class="hljs-keyword">new</span> <span class="hljs-title class_">int</span>[count];    <span class="hljs-comment">// 标记节点是否已处理</span>    <span class="hljs-type">boolean</span>[] visited = <span class="hljs-keyword">new</span> <span class="hljs-title class_">boolean</span>[count];    <span class="hljs-comment">// 初始化邻接矩阵和距离数组</span>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; count; i++) &#123;        dist[i] = adjMatrix[start][i];        path[i] = dist[i] == Double.MAX_VALUE ? -<span class="hljs-number">1</span> : start;    &#125;    <span class="hljs-comment">// 标记起点为已访问</span>    visited[start] = <span class="hljs-literal">true</span>;    dist[start] = <span class="hljs-number">0</span>;    <span class="hljs-comment">// 主循环：寻找最短路径</span>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; count; i++) &#123;        <span class="hljs-comment">// 找到当前未访问的最近节点</span>        <span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> start;        <span class="hljs-type">double</span> <span class="hljs-variable">min</span> <span class="hljs-operator">=</span> Double.MAX_VALUE;        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; count; j++) &#123;            <span class="hljs-keyword">if</span> (!visited[j] &amp;&amp; dist[j] &lt; min) &#123;                index = j;                min = dist[j];            &#125;        &#125;        <span class="hljs-comment">// 标记该节点为已访问</span>        visited[index] = <span class="hljs-literal">true</span>;        <span class="hljs-comment">// 更新与当前节点相邻节点的最短距离</span>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; k &lt; count; k++) &#123;            <span class="hljs-type">double</span> <span class="hljs-variable">temp</span> <span class="hljs-operator">=</span> adjMatrix[index][k] == Double.MAX_VALUE ? Double.MAX_VALUE : min;            <span class="hljs-keyword">if</span> (!visited[k] &amp;&amp; dist[k] &gt;= temp) &#123;                dist[k] = temp;                path[k] = index;            &#125;        &#125;        <span class="hljs-comment">// 如果已处理终点，提前结束</span>        <span class="hljs-keyword">if</span> (index == end) &#123;            <span class="hljs-keyword">break</span>;        &#125;    &#125;    <span class="hljs-comment">// 构建实际路径</span>    List&lt;VertexModel&gt; result = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();    realPath(start, end, path, result);    result.add(vertex.get(end));    <span class="hljs-comment">// 返回结果</span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">PathResult</span>(dist[end], result);&#125;</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>基于 MyBatis-Plus 的代码生成实践：Freemarker 模板定制详解</title>
     <link href="/2025/07/11/%E5%9F%BA%E4%BA%8EMyBatis-Plus%E7%9A%84%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%AE%9E%E8%B7%B5%EF%BC%9AFreemarker%E6%A8%A1%E6%9D%BF%E5%AE%9A%E5%88%B6%E8%AF%A6%E8%A7%A3/"/>
     <url>/2025/07/11/%E5%9F%BA%E4%BA%8EMyBatis-Plus%E7%9A%84%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%AE%9E%E8%B7%B5%EF%BC%9AFreemarker%E6%A8%A1%E6%9D%BF%E5%AE%9A%E5%88%B6%E8%AF%A6%E8%A7%A3/</url>
