@@ -29,8 +29,9 @@
 <meta property="og:description" content="什么是Kafkakafka是一个分布式流处理平台，主要用于构建实时数据管道和流应用。它具备高吞吐，低延迟，可拓展和容错等特性。主要功能包括：  发布和订阅数据流：类似消息队列，支持多生产者和多消费者。 存储数据流：数据可以被持久化 实时处理数据流：支持对数据进行转换，聚合等实时处理操作。  应用场景：  日志收集与聚合 事件溯源 消息队列服务  搭建kafka集群使用KRaft作为注册中心本次搭建">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20250714141802730.png">
+<meta property="og:image" content="https://feature-zing.github.io/2025/07/14/%E5%9F%BA%E4%BA%8EDocker-Compose%E7%9A%84Kafka%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/image-20250715103126068.png">
 <meta property="article:published_time" content="2025-07-14T05:47:45.000Z">
-<meta property="article:modified_time" content="2025-07-14T07:45:39.570Z">
+<meta property="article:modified_time" content="2025-07-15T02:33:08.363Z">
 <meta property="article:author" content="六十">
 <meta property="article:tag" content="kafka">
 <meta name="twitter:card" content="summary_large_image">
@@ -240,7 +241,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          995 字
+          1.1k 字
         
       </span>
     
@@ -496,7 +497,22 @@
     <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span></code></pre></div>
 
 
+<h2 id="Kafka-可视化界面"><a href="#Kafka-可视化界面" class="headerlink" title="Kafka 可视化界面"></a>Kafka 可视化界面</h2><p>搭建好kafka集群后，可能需要一个能够查看kafka相关topic和messageUI界面，推荐使用kafka-ui，通过浏览器本地部署查看。</p>
+<blockquote>
+<p>源项目地址：<a target="_blank" rel="noopener" href="https://github.com/provectus/kafka-ui">https://github.com/provectus/kafka-ui</a></p>
+</blockquote>
+<div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">kafka-ui:</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">kafka-ui</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">provectuslabs/kafka-ui:latest</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">8080</span><span class="hljs-string">:8080</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">DYNAMIC_CONFIG_ENABLED:</span> <span class="hljs-string">&#x27;true&#x27;</span></code></pre></div>
 
+<p>部署后显示界面为：</p>
+<p><img src="image-20250715103126068.png" srcset="/img/loading.gif" lazyload alt="image-20250715103126068"></p>
 
                 
               </div>
@@ -586,6 +602,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/07/14/Kafka%E6%9E%B6%E6%9E%84%E4%BB%8B%E7%BB%8D%EF%BC%9A%E5%88%86%E5%8C%BA%E3%80%81%E5%89%AF%E6%9C%AC%E3%80%81Broker%E4%B8%8EController/" title="Kafka架构介绍：分区、副本、Broker与Controller">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kafka架构介绍：分区、副本、Broker与Controller</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
