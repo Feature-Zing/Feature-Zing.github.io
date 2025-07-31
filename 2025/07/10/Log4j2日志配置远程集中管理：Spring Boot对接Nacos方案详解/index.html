@@ -28,15 +28,15 @@
 <meta property="og:site_name" content="六十">
 <meta property="og:description" content="在开发中一般把日志文件配置xml文件，放在项目的resource文件夹下，但是每个系统都有一个日志xml配置文件，如果需要修改日志格式等配置则需要重新发版，流程很长，所以提出需求需要通过nacos配置中心读取并且实现配置动态刷新的能力。通过改变加载顺序实现在项目启动时，通过nacos读取到配置的日志XML文件，然后将xml文件内容放入LoggerContext，实现日志文件加载。 引入log4j2">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://feature-zing.github.io/2025/07/10/Log4j2%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%EF%BC%9ASpring%20Boot%E5%AF%B9%E6%8E%A5Nacos%E6%96%B9%E6%A1%88%E8%AF%A6%E8%A7%A3/Log4j2%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%EF%BC%9ASpring%20Boot%E5%AF%B9%E6%8E%A5Nacos%E6%96%B9%E6%A1%88%E8%AF%A6%E8%A7%A3.assets/image-20250711100634540.png">
+<meta property="og:image" content="https://feature-zing.github.io/image-20250711100634540.png">
 <meta property="article:published_time" content="2025-07-10T06:23:41.000Z">
-<meta property="article:modified_time" content="2025-07-31T06:28:58.000Z">
+<meta property="article:modified_time" content="2025-07-31T14:07:20.467Z">
 <meta property="article:author" content="六十">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Nacos">
 <meta property="article:tag" content="Spring Boot">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://feature-zing.github.io/2025/07/10/Log4j2%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%EF%BC%9ASpring%20Boot%E5%AF%B9%E6%8E%A5Nacos%E6%96%B9%E6%A1%88%E8%AF%A6%E8%A7%A3/Log4j2%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%EF%BC%9ASpring%20Boot%E5%AF%B9%E6%8E%A5Nacos%E6%96%B9%E6%A1%88%E8%AF%A6%E8%A7%A3.assets/image-20250711100634540.png">
+<meta name="twitter:image" content="https://feature-zing.github.io/image-20250711100634540.png">
   
   
   
@@ -579,7 +579,7 @@ com.future.nacos.logger.LoggerContextInitializer</code></pre></div></li>
 &#125;</code></pre></div>
 
 <p>日志动态更新不需要再应用启动之前进行配置，只需要再应用启动之后进行监听配置。</p>
-<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><p><img src="Log4j2%E6%97%A5%E5%BF%97%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8B%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%EF%BC%9ASpring%20Boot%E5%AF%B9%E6%8E%A5Nacos%E6%96%B9%E6%A1%88%E8%AF%A6%E8%A7%A3.assets/image-20250711100634540.png" srcset="/img/loading.gif" lazyload alt="image-20250711100634540"></p>
+<h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><p><img src="/image-20250711100634540.png" srcset="/img/loading.gif" lazyload alt="image-20250711100634540"></p>
 <h2 id="日志引用spring相关配置"><a href="#日志引用spring相关配置" class="headerlink" title="日志引用spring相关配置"></a>日志引用spring相关配置</h2><ol>
 <li><p>引入pom文件</p>
  <div class="code-wrapper"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
